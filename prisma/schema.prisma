@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum gender {
+  laki
+  perempuan
+}
+enum statusPegawai {
+  pns
+  kontrak
+}
+
+model Teacher {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  tempatLahir String
+  tglLahir DateTime
+  gender gender
+  alamat String
+  nohp String
+  tgl_join DateTime
+  status statusPegawai
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  students Student[] 
+}
+
+model Student {
+  id String @id @default(uuid())
+  nisn String @unique
+  username String @unique
+  nama String
+  password String
+  tempatLahir String
+  tglLahir DateTime
+  gender gender
+  alamat String
+  nohp String
+  teacher_Id String?// FK to Teacher.id
+  teacher Teacher? @relation(fields: [teacher_Id], references: [id], onDelete: Cascade) // relation with table student
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}

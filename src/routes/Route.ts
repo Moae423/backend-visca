@@ -1,8 +1,10 @@
 import express from "express";
 import * as StudentController from "../controller/StudentController";
 import * as TeacherController from "../controller/TeacherController";
+import { authenticateToken } from "../middlewares/AuthMiddleware";
 const Router = express.Router();
 
+Router.use(authenticateToken);
 Router.get("/student", StudentController.getAllStudentController);
 Router.get("/student/:id", StudentController.getStudentByIdController);
 Router.post("/student", StudentController.createStudentController);

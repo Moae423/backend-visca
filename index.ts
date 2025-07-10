@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import Route from "./src/routes/Route";
+import auth from "./src/routes/auth";
 const port = process.env.port || 3000;
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(
 );
 
 app.use("/api", Route);
+app.use("/auth", auth);
 
 app.get("/", async (req, res) => {
   try {

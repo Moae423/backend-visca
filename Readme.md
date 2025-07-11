@@ -43,7 +43,7 @@ cp .env.example .env
 
 ## 4️⃣ Setup database
 
-# Edit DATABASE_URL di file .env sesuai database kamu (PostgreSQL/MySQL/SQLite)
+### Edit DATABASE_URL di file .env sesuai database kamu (PostgreSQL/MySQL/SQLite)
 
 ## 5️⃣ Generate Prisma client
 

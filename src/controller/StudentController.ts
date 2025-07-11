@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as StudentServices from "../services/StudentServices";
+import prisma from "../lib/Prisma";
 
 export const getAllStudentController = async (req: Request, res: Response) => {
   try {
@@ -49,6 +50,17 @@ export const getStudentByIdController = async (req: Request, res: Response) => {
 
 export const createStudentController = async (req: Request, res: Response) => {
   try {
+    const studentId = await prisma.student.findUnique({
+      where: { nisn: req.body.nisn },
+    });
+    if (studentId) {
+      res.status(400).json({
+        message: "NISN already exists",
+        success: false,
+        error: { message: "NISN already exists" },
+      });
+      return;
+    }
     const student = await StudentServices.createStudentServices(req.body);
     res.status(200).json({
       message: "Data has been created",
